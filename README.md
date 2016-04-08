@@ -1,2 +1,2 @@
-# NearestNeighbourAlgorithm
-Application of KNN Algorithm to diagnose breast Cancer
+# Nearest Neighbor Algorithm
+Application of k-nn Algorithm to diagnose breast cancer
