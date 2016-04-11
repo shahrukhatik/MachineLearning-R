@@ -89,7 +89,8 @@ We can finally apply the alogrithm and cross check the results to see how we did
 
     > wbcd_test_pred <- knn(train = wbcd_train, test = wbcd_test, cl = wbcd_train_labels, k = 21)
 
-It will yield a result similar to this
+It will yield a result similar to this:
+
 <img src="https://github.com/shahrukhatik/k-NN-Algorithm/blob/master/Screen%20Shot%202016-04-11%20at%206.48.59%20PM.png?raw=true" alt="Mountain View" style="width:304px;height:228px;">
 
 
