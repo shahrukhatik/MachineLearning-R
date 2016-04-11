@@ -8,15 +8,20 @@ Let us figure out the effectiveness of whether detecting cancer by applying the 
 from women with abnormal breast masses. The dataset, "Wisconsin Breast Cancer Diagnostic" can be found from the <a href="http://archive.ics.uci.edu/ml.">UCI Machine Learning Repository</a>. 
 
 The dataset contains 569 observations, with 32 attributes. The first 12 contain Patient ID, cancer type and then:
-<ul><li>• Radius</li>
-<li>• Texture</li>
-<li>• Perimeter</li>
-<li>• Area</li>
-<li>• Smoothness</li>
-<li>• Compactness</li>
-<li>• Concavity</li>
-<li>• Concave points</li>
-<li>• Symmetry</li>
+<ul><li>Radius</li>
+<li>Texture</li>
+<li>Perimeter</li>
+<li>Area</li>
+<li>Smoothness</li>
+<li>Compactness</li>
+<li>Concavity</li>
+<li>Concave points</li>
+<li>Symmetry</li>
 <li>• Fractal dimension</li></ul>
-The later attributes are just variants of the preceeding 10, which you will see later while following along.
+The later attributes are just variants of the preceeding 10, such as Radius_StandardError or Radius Worst. 
 
+# II. Exploring and Transforming the Dataset
+
+The first step would be to import the data. You may import the data using the 'Import Dataset' button if you have RStudio installed, or use the following code:
+
+     > wbcd <- read.csv("wisc_bc_data.csv", stringsAsFactors = FALSE) #DDD
