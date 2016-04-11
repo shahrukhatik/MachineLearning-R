@@ -16,7 +16,7 @@ The dataset contains 569 observations, with 32 attributes. The first 12 contain 
 <li>Concavity</li>
 <li>Concave points</li>
 <li>Symmetry</li>
-<li>• Fractal dimension</li></ul>
+<li> Fractal dimension</li></ul>
 The later attributes are just variants of the preceeding 10, such as Radius_StandardError or Radius Worst. 
 
 # II. Exploring and Transforming the Dataset
@@ -47,4 +47,21 @@ Observing the prop.table() output,
     > round(prop.table(table(wbcd$diagnosis)) * 100, digits = 1)
      Benign Malignant
       62.7 37.3 #result
+
+In order for us to apply this algorithm, we need to make sure that the variables do not significantly differ in size or 
+else our results will tend to be inaccurate or biased. Therefore, it is always a good habbit to just check a statistical summary of the 
+data. To take note of some statistical summaries we can use,
+
+    > summary(wbcd[c("radius_mean", "area_mean", "smoothness_mean")])
+
+Observing above, we see that the Max for area_mean is 2501 which is drastically different. This calls us to normalize the data which we can write, apply and view by:
+
+    > normalize <- function(x) {
+    return ((x - min(x)) / (max(x) - min(x)))
+    }
+    > wbcd_n <- as.data.frame(lapply(wbcd[2:31], normalize))
+    > summary(wbcd_n$area_mean)
+
+
+
 
