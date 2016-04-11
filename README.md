@@ -93,6 +93,12 @@ It will yield a result similar to this:
 
 <img src="https://github.com/shahrukhatik/k-NN-Algorithm/blob/master/Screen%20Shot%202016-04-11%20at%206.48.59%20PM.png?raw=true" alt="Mountain View" style="width:304px;height:228px;">
 
+The cell percentages in the table indicate the proportion of values that fall into four categories. The top-left cell indicates the <i>true negative results</i>. These 77 of the 100 values are the trials where the diagnosis were benign and the k-NN algorithm correctly identified it! The bottom-right cell indicates the true positive results, where the algorithm predicted correctly again. A total of 21 of 100 predictions were true positives. This means that out of 100, our algorithm was able to predict 98 timees correctly. 
+
+The cells falling on the other diagonal contain counts of examples where the k-NN approach disagreed with the actual diagnosis. The two examples in the lower-left cell are false negative results; in this case, the predicted value was benign, but the tumor was actually malignant. This is the most dangerous cell block to have an error in, as it can wrongly diagnose a patient and make them believe they dont have cancer - where in turn, they do.  The top-right cell would contain the false positive results, which we got as 0. These values occur when the model classifies a mass as malignant, but in reality, it was benign. These errors are less concerining, but could create drastic financial burden on patients who believe they have cancer, but dont and therefore are getting treated. 
+
+By carrying out the algorithm, we have a 98% accuracy. Applying this algorithm to new data would allow us to determine its accuracy better.
+
 
 
 
