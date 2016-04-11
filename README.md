@@ -8,7 +8,7 @@ Let us figure out the effectiveness of whether detecting cancer by applying the 
 from women with abnormal breast masses. The dataset, "Wisconsin Breast Cancer Diagnostic" can be found from the <a href="http://archive.ics.uci.edu/ml.">UCI Machine Learning Repository</a>. 
 
 The dataset contains 569 observations, with 32 attributes. The first 12 contain Patient ID, cancer type and then:
-<ul>• Radius
+• Radius
 • Texture
 • Perimeter
 • Area
@@ -17,6 +17,6 @@ The dataset contains 569 observations, with 32 attributes. The first 12 contain 
 • Concavity
 • Concave points
 • Symmetry
-• Fractal dimension</ul>
+• Fractal dimension
 The later attributes are just variants of the preceeding 10, which you will see later while following along.
 
