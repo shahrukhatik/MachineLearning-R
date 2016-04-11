@@ -79,7 +79,7 @@ When we constructed our normalized training and test datasets, we excluded the t
 In order to continue building our model, we will need a package called "class". Install and load it using:
 
     > install.packages("class")
-    > library("class")
+    > library(class)
 
 
 
