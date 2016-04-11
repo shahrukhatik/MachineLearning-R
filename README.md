@@ -41,7 +41,7 @@ If you have done everything correctly you should see that your data fram has 569
 Many R machine learning classifiers require that the target feature is coded as a factor, so we will need to recode the diagnosis variable. 
 
     > wbcd$diagnosis<- factor(wbcd$diagnosis, levels = c("B", "M"),
-       labels = c("Benign", "Malignant"))
+    labels = c("Benign", "Malignant"))
 
 Observing the prop.table() output,
     > round(prop.table(table(wbcd$diagnosis)) * 100, digits = 1)
