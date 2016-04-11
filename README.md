@@ -1,6 +1,6 @@
 # Nearest Neighbor Algorithm
 
-   This repository with deal with the application of k-nn Algorithm to diagnose breast cancer using R. The following process has been adapted from Brett Lantz, "Machine Learning With R". The following process will adapt to using the nearest neighbor algorithm to correctly attempt predict whether the patients had a benign or malignant tumor.
+   This repository with deal with the application of k-nn Algorithm to diagnose breast cancer using R. The following process has been adapted from Brett Lantz, "Machine Learning With R". If you would like more details of the process, please support the author by purchasing the book. The following process will adapt to using the nearest neighbor algorithm to correctly attempt predict whether the patients had a benign or malignant tumor.
 
 # I. Introduction 
 
