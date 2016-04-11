@@ -44,9 +44,10 @@ Many R machine learning classifiers require that the target feature is coded as 
     labels = c("Benign", "Malignant"))
 
 Observing the prop.table() output,
+
     > round(prop.table(table(wbcd$diagnosis)) * 100, digits = 1)
-     Benign Malignant
-      62.7 37.3 #result
+    Benign Malignant
+    62.7 37.3
 
 In order for us to apply this algorithm, we need to make sure that the variables do not significantly differ in size or 
 else our results will tend to be inaccurate or biased. Therefore, it is always a good habbit to just check a statistical summary of the 
@@ -62,6 +63,23 @@ Observing above, we see that the Max for area_mean is 2501 which is drastically 
     > wbcd_n <- as.data.frame(lapply(wbcd[2:31], normalize))
     > summary(wbcd_n$area_mean)
 
+# III. Training the dataset and Model
+
+As we dont have access to new data, we cannot use the model to predict incoming data(from labs etc). Therefore, we must make use of what we have. Hence, we can split the dataset we have into 2 parts, one for training the dataset and the other one to verify how well we have trained the last dataset. If trained correctly, the model from the first dataset should be able to accurately guess the diagnostics of the observations from the second dataset. We will use 469 observations to train the first set, and 100 observations to verify.
+We can split the dataset by using:
+
+    > wbcd_train <- wbcd_n[1:469, ]
+    > wbcd_test <- wbcd_n[470:569, ]
+
+When we constructed our normalized training and test datasets, we excluded the target variable, diagnosis. For training the k-NN model, we will need to store these class labels in factor vectors, split between the training and test datasets:
+
+    > wbcd_train_labels <- wbcd[1:469, 1]
+    > wbcd_test_labels <- wbcd[470:569, 1]
+
+In order to continue building our model, we will need a package called "class". Install and load it using:
+
+    > install.packages("class")
+    > library("class")
 
 
 
