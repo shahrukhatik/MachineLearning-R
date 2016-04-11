@@ -1,6 +1,8 @@
 # Nearest Neighbor Algorithm
 
    This repository with deal with the application of k-nn Algorithm to diagnose breast cancer using R. The following process has been adapted from Brett Lantz, "Machine Learning With R". If you would like more details of the process, please support the author by purchasing the book. The following process will adapt to using the nearest neighbor algorithm to correctly attempt predict whether the patients had a benign or malignant tumor.
+   
+   Please note that this repository may not give you the full insight to theory or understanding of the algorithm itself, but how to apply it with R. 
 
 # I. Introduction 
 
@@ -80,6 +82,12 @@ In order to continue building our model, we will need a package called "class". 
 
     > install.packages("class")
     > library(class)
+
+# IV. Applying the KN-Algorithm and Testing
+
+We can finally apply the alogrithm and cross check the results to see how we did. We can choose the value of k=21(as its the closest to the sq.rt of 469). We can use the following formula
+
+    > wbcd_test_pred <- knn(train = wbcd_train, test = wbcd_test, cl = wbcd_train_labels, k = 21)
 
 
 
