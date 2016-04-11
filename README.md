@@ -27,7 +27,7 @@ The first step would be to import the data. You may import the data using the 'I
 
 I suggest renaming the dataset afterwards, to ease out complex issues that may arise when you are trying to tell the variables a part. In order to this we will use the colnames() function. To understand the data and variables better, consider looking through the file data description in the same place you found the data. I have renamed this dataset using the data descriptions found.
 
-    colnames(wdbc) <-c("ID","diagnosis","radius_mean","texture_mean","perimeter_mean","area_mean","
+    colnames(wbcd) <-c("ID","diagnosis","radius_mean","texture_mean","perimeter_mean","area_mean","
     smoothness_mean","compactness_mean","concavity_mean","concavepnts_mean","symmetry_mean",
     "fractal_mean","radius_SE","texture_SE","perimeter_SE","area_SE","smoothness_SE","compactness_SE",
     "concavity_SE","concavepts_SE","symmetry_SE","fractal_SE","vradiuse_worst","texture_worst",
