@@ -1,7 +1,7 @@
 # I. Introduction 
 
 Let us figure out the effectiveness of whether detecting cancer by applying the k-NN algorithm to measurements of biopsied cells 
-from women with abnormal breast masses. The dataset, "Wisconsin Breast Cancer Diagnostic" can be found from the <a href="http://archive.ics.uci.edu/ml.">UCI Machine Learning Repository</a>. Browse through the area untill you see "Breast Cancer Wisconsin (Diagnostic) Data Set" on the right hand side. Click on the data folder and download "wdbc.data". This if the file we will be working with. If you would like a better explanation of the dataset and variables please click the "Data Description" tab.
+from women with abnormal breast masses. The dataset, "Wisconsin Breast Cancer Diagnostic" can be found from the <a href="http://archive.ics.uci.edu/ml">UCI Machine Learning Repository</a>. Browse through the area untill you see "Breast Cancer Wisconsin (Diagnostic) Data Set" on the right hand side. Click on the data folder and download "wdbc.data". This if the file we will be working with. If you would like a better explanation of the dataset and variables please click the "Data Description" tab.
 The dataset contains 569 observations, with 32 attributes. The first 12 contain Patient ID, cancer type and then:
 <ul><li>Radius</li>
 <li>Texture</li>
