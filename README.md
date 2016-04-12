@@ -4,7 +4,7 @@
 
 # I. Nearest Neighbor Algorithm
 
-Monday, April 11th, 2016: The application of k-nn Algorithm will be found being used to diagnose breast cancer using R.
+Monday, 04/11/16: The application of k-nn Algorithm will be found being used to diagnose breast cancer using R.
 
 
 
