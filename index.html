@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Nearest Neighbors Algorithm by shahrukhatik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Nearest Neighbors Algorithm</h1>
+      <h2 class="project-tagline">Applications of Machine Learning using R and Python</h2>
+      <a href="https://github.com/shahrukhatik/projectname" class="btn">View on GitHub</a>
+      <a href="https://github.com/shahrukhatik/projectname/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/shahrukhatik/projectname/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="i-introduction" class="anchor" href="#i-introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>I. Introduction</h1>
+
+<p>Let us figure out the effectiveness of whether detecting cancer by applying the k-NN algorithm to measurements of biopsied cells 
+from women with abnormal breast masses. The dataset, "Wisconsin Breast Cancer Diagnostic" can be found from the <a href="http://archive.ics.uci.edu/ml">UCI Machine Learning Repository</a>. Browse through the area untill you see "Breast Cancer Wisconsin (Diagnostic) Data Set" on the right hand side. Click on the data folder and download "wdbc.data". This if the file we will be working with. If you would like a better explanation of the dataset and variables please click the "Data Description" tab.
+The dataset contains 569 observations, with 32 attributes. The first 12 contain Patient ID, cancer type and then:</p>
+
+<ul>
+<li>Radius</li>
+<li>Texture</li>
+<li>Perimeter</li>
+<li>Area</li>
+<li>Smoothness</li>
+<li>Compactness</li>
+<li>Concavity</li>
+<li>Concave points</li>
+<li>Symmetry</li>
+<li> Fractal dimension</li>
+</ul>
+
+<p>The later attributes are just variants of the preceeding 10, such as Radius_StandardError or Radius Worst. </p>
+
+<h1>
+<a id="ii-exploring-and-transforming-the-dataset" class="anchor" href="#ii-exploring-and-transforming-the-dataset" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>II. Exploring and Transforming the Dataset</h1>
+
+<p>The first step would be to import the data. You may import the data using the 'Import Dataset' button if you have RStudio installed, or use the following code:</p>
+
+<pre><code> &gt; wbcd &lt;- read.csv("wisc_bc_data.csv", stringsAsFactors = FALSE)
+</code></pre>
+
+<p>I suggest renaming the dataset afterwards, to ease out complex issues that may arise when you are trying to tell the variables a part. In order to this we will use the colnames() function. To understand the data and variables better, consider looking through the file data description in the same place you found the data. I have renamed this dataset using the data descriptions found.</p>
+
+<pre><code>colnames(wbcd) &lt;-c("ID","diagnosis","radius_mean","texture_mean","perimeter_mean","area_mean","
+smoothness_mean","compactness_mean","concavity_mean","concavepnts_mean","symmetry_mean",
+"fractal_mean","radius_SE","texture_SE","perimeter_SE","area_SE","smoothness_SE","compactness_SE",
+"concavity_SE","concavepts_SE","symmetry_SE","fractal_SE","vradiuse_worst","texture_worst",
+"perimeter_worst","area_worst","smoothness_worst","compactness_worst","concavity_worst",
+"concave_worst","symmetry_worst","fractal_worst")
+</code></pre>
+
+<p>If you have done everything correctly you should see that your data fram has 569 obs. of 32 varaibles. As we don't need the 'ID' for this problem, we can decide to drop it.</p>
+
+<pre><code>wbcd &lt;- wbcd[-1]
+</code></pre>
+
+<p>Many R machine learning classifiers require that the target feature is coded as a factor, so we will need to recode the diagnosis variable. </p>
+
+<pre><code>&gt; wbcd$diagnosis&lt;- factor(wbcd$diagnosis, levels = c("B", "M"),
+labels = c("Benign", "Malignant"))
+</code></pre>
+
+<p>Observing the prop.table() output,</p>
+
+<pre><code>&gt; round(prop.table(table(wbcd$diagnosis)) * 100, digits = 1)
+Benign Malignant
+62.7 37.3
+</code></pre>
+
+<p>In order for us to apply this algorithm, we need to make sure that the variables do not significantly differ in size or 
+else our results will tend to be inaccurate or biased. Therefore, it is always a good habbit to just check a statistical summary of the 
+data. To take note of some statistical summaries we can use,</p>
+
+<pre><code>&gt; summary(wbcd[c("radius_mean", "area_mean", "smoothness_mean")])
+</code></pre>
+
+<p>Observing above, we see that the Max for area_mean is 2501 which is drastically different. This calls us to normalize the data which we can write, apply and view by:</p>
+
+<pre><code>&gt; normalize &lt;- function(x) {
+return ((x - min(x)) / (max(x) - min(x)))
+}
+&gt; wbcd_n &lt;- as.data.frame(lapply(wbcd[2:31], normalize))
+&gt; summary(wbcd_n$area_mean)
+</code></pre>
+
+<h1>
+<a id="iii-training-the-dataset-and-model" class="anchor" href="#iii-training-the-dataset-and-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>III. Training the dataset and Model</h1>
+
+<p>As we dont have access to new data, we cannot use the model to predict incoming data(from labs etc). Therefore, we must make use of what we have. Hence, we can split the dataset we have into 2 parts, one for training the dataset and the other one to verify how well we have trained the last dataset. If trained correctly, the model from the first dataset should be able to accurately guess the diagnostics of the observations from the second dataset. We will use 469 observations to train the first set, and 100 observations to verify.
+We can split the dataset by using:</p>
+
+<pre><code>&gt; wbcd_train &lt;- wbcd_n[1:469, ]
+&gt; wbcd_test &lt;- wbcd_n[470:569, ]
+</code></pre>
+
+<p>When we constructed our normalized training and test datasets, we excluded the target variable, diagnosis. For training the k-NN model, we will need to store these class labels in factor vectors, split between the training and test datasets:</p>
+
+<pre><code>&gt; wbcd_train_labels &lt;- wbcd[1:469, 1]
+&gt; wbcd_test_labels &lt;- wbcd[470:569, 1]
+</code></pre>
+
+<p>In order to continue building our model, we will need a package called "class". Install and load it using:</p>
+
+<pre><code>&gt; install.packages("class")
+&gt; library(class)
+</code></pre>
+
+<h1>
+<a id="iv-applying-the-kn-algorithm-and-testing" class="anchor" href="#iv-applying-the-kn-algorithm-and-testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>IV. Applying the KN-Algorithm and Testing</h1>
+
+<p>We can finally apply the alogrithm and cross check the results to see how we did. We can choose the value of k=21(as its the closest to the sq.rt of 469). We can use the following formula</p>
+
+<pre><code>&gt; wbcd_test_pred &lt;- knn(train = wbcd_train, test = wbcd_test, cl = wbcd_train_labels, k = 21)
+</code></pre>
+
+<p>It will yield a result similar to this</p>
+
+<p><img src="https://github.com/shahrukhatik/k-NN-Algorithm/blob/master/Screen%20Shot%202016-04-11%20at%206.48.59%20PM.png?raw=true" alt="Mountain View"></p>
+
+<p>The cell percentages in the table indicate the proportion of values that fall into four categories. The top-left cell indicates the <i>true negative results</i>. These 77 of the 100 values are the trials where the diagnosis were benign and the k-NN algorithm correctly identified it! The bottom-right cell indicates the true positive results, where the algorithm predicted correctly again. A total of 21 of 100 predictions were true positives. This means that out of 100, our algorithm was able to predict 98 timees correctly. </p>
+
+<p>The cells falling on the other diagonal contain counts of examples where the k-NN approach disagreed with the actual diagnosis. The two examples in the lower-left cell are false negative results; in this case, the predicted value was benign, but the tumor was actually malignant. This is the most dangerous cell block to have an error in, as it can wrongly diagnose a patient and make them believe they dont have cancer - where in turn, they do.  The top-right cell would contain the false positive results, which we got as 0. These values occur when the model classifies a mass as malignant, but in reality, it was benign. These errors are less concerining, but could create drastic financial burden on patients who believe they have cancer, but dont and therefore are getting treated. </p>
+
+<p>By carrying out the algorithm, we have a 98% accuracy. Applying this algorithm to new data would allow us to determine its accuracy better.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/shahrukhatik/projectname">Nearest Neighbors Algorithm</a> is maintained by <a href="https://github.com/shahrukhatik">shahrukhatik</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
