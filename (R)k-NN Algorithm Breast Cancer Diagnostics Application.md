@@ -30,7 +30,7 @@ I suggest renaming the dataset afterwards, to ease out complex issues that may a
     "perimeter_worst","area_worst","smoothness_worst","compactness_worst","concavity_worst",
     "concave_worst","symmetry_worst","fractal_worst")
 
-If you have done everything correctly you should see that your data fram has 569 obs. of 32 varaibles. As we don't need the 'ID' for this problem, we can decide to drop it.
+If you have done everything correctly you should see that your data fram has 569 obs. of 32 variables. As we don't need the 'ID' for this problem, we can drop it.
 
     wbcd <- wbcd[-1]
 
